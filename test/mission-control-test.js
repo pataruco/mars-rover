@@ -113,4 +113,11 @@ describe('MissionControl', ( ) => {
             });
         });
     });
+    
+    describe('Lost robots', ( ) => {
+        it('should SET an array of lost robots coordinates', ( ) => {
+            missionControl.lostContactCoordinates = {x: 5, y:3}
+            missionControl.data.lostContactCoordinates.should.include.something.that.deep.equals( {x: 5, y:3} )
+        });
+    });
 });

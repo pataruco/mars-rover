@@ -11,7 +11,11 @@ module.exports = class Robot {
                 y:0,
                 orientation: 'n'
             },
-            instructions: []
+            instructions: [],
+            dimensions: {
+                x: 0,
+                y: 0
+            }
         }
     }
     set previousPosition( position ) {
@@ -29,12 +33,20 @@ module.exports = class Robot {
     get finalPosition( ) {
         return this.data.finalPosition;
     }
-    
+
     set instructions( instructionsArray ) {
         return this.data.instructions = instructionsArray;
     }
 
     get instructions()  {
         return this.data.instructions;
+    }
+
+    set worldDimensions( dimensionsData ) {
+        this.data.dimensions = dimensionsData;
+    }
+
+    get worldDimensions( ) {
+        return this.data.dimensions;
     }
 }

@@ -1,10 +1,10 @@
 const chai = require('chai');
 const expect = require('chai').expect;
 const mocha = require('mocha');
+const MissionControl = require('../src/mission-control.js');
 const Robot = require('../src/robot.js');
 const assertArrays = require('chai-arrays');
 chai.use(assertArrays);
-const MissionControl = require('../src/mission-control.js');
 
 describe('Robot', ( ) => {
     const missionControl = new MissionControl( );
@@ -73,6 +73,20 @@ describe('Robot', ( ) => {
             missionControl.robotDirection = 'RFRFRFRF';
             robot.instructions = missionControl.robotDirection;
             expect( robot.instructions ).to.be.equalTo(['r','f','r','f','r','f','r','f']);
+        });
+    });
+
+    describe('World enviroment', ( ) => {
+        it('should SET enviroment data', ( ) => {
+            const missionOne = new MissionControl( )
+            const robotOne = new Robot( )
+            missionOne.coordinates = '5 3';
+            missionOne.robotDirection = 'RFRFRFRF';
+            missionOne.robotPosition = '1 1 E';
+            robotOne.finalPosition = missionOne.robotPosition;
+            robotOne.instructions = missionOne.robotDirection;
+            robotOne.worldDimensions = missionOne.coordinates;
+            expect( robotOne.data.dimensions ).to.include({x:5, y:3});
         });
     });
 });

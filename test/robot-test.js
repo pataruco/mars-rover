@@ -102,7 +102,7 @@ describe('Robot', ( ) => {
             robotTwo.instructions = missionTwo.robotDirection;
             expect( robotTwo.move ).to.be.equal('1 1 E');
         });
-        
+
         it('should move from 3 2 N to coordinate 3 3 N LOST when instructions FRRFLLFFRRFLL are set', ( ) => {
             const missionThree = new MissionControl( )
             const robotThree = new Robot( )
@@ -113,6 +113,33 @@ describe('Robot', ( ) => {
             robotThree.finalPosition = missionThree.robotPosition;
             robotThree.instructions = missionThree.robotDirection;
             expect( robotThree.move ).to.be.equal('3 3 N LOST');
+        });
+        
+        describe('Lost Robot "Scent"', ( ) => {
+            describe('Given robot lost scent when next robot move then', ( ) => {
+                it('should prevent get off from the grid', ( ) => {
+                    const missionThree = new MissionControl( )
+                    missionThree.coordinates = '5 3';
+                    missionThree.robotDirection = 'FRRFLLFFRRFLL';
+                    missionThree.robotPosition = '3 2 N';
+                    robot.finalPosition = missionThree.robotPosition;
+                    robot.instructions = missionThree.robotDirection;
+                    robot.worldDimensions = missionThree.coordinates;
+                    robot.lostContactCoordinates = missionThree.lostContactCoordinates;
+                    robot.move;
+                    if( robot.data.isLost ) {
+                        missionThree.lostContactCoordinates = robot.lostCoordinates;
+                    }
+                    const smartRobot = new Robot( );
+                    missionThree.robotDirection = 'LLFFFLFLFL';
+                    missionThree.robotPosition = '0 3 W';
+                    smartRobot.finalPosition = missionThree.robotPosition;
+                    smartRobot.instructions = missionThree.robotDirection;
+                    smartRobot.worldDimensions = missionThree.coordinates;
+                    smartRobot.lostContactCoordinates = missionThree.lostContactCoordinates;
+                    expect( smartRobot.move ).to.be.equal('2 3 S');
+                });
+            });
         });
     });
 });

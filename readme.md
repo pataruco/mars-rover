@@ -1,6 +1,6 @@
 # Red Badger Mars Rover Challenge
 ## What it is?
-Is code challenge built on JavaScript, Wohoo!
+It is code challenge built on JavaScript, Wohoo!
 
 ## Requirements
 - Node >= 8.6.0
@@ -30,7 +30,7 @@ Is code challenge built on JavaScript, Wohoo!
 - Inside mars-rover folder run
     - `npm start`
 
-Then the programme would ask ask you for a set of instructions.
+Then the programme will ask for a set of instructions.
 
 You can introduce this if you like:
 
@@ -114,7 +114,7 @@ For each robot position/instruction in the input, the output should indicate the
 
 `11E` \\ *Robot 1 coordinates after instructions*<br>
 `33NLOST` \\ *Robot 2 coordinates after instructions*<br>
-`23S` \\ *Robot 3 coordinates after instructions* <br>*
+`23S` \\ *Robot 3 coordinates after instructions* <br>
 
 ### Some notes
 Sorry, are in *spanglish*

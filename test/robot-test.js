@@ -102,5 +102,17 @@ describe('Robot', ( ) => {
             robotTwo.instructions = missionTwo.robotDirection;
             expect( robotTwo.move ).to.be.equal('1 1 E');
         });
+        
+        it('should move from 3 2 N to coordinate 3 3 N LOST when instructions FRRFLLFFRRFLL are set', ( ) => {
+            const missionThree = new MissionControl( )
+            const robotThree = new Robot( )
+            missionThree.coordinates = '5 3';
+            missionThree.robotDirection = 'FRRFLLFFRRFLL';
+            missionThree.robotPosition = '3 2 N';
+            robotThree.worldDimensions = missionThree.coordinates;
+            robotThree.finalPosition = missionThree.robotPosition;
+            robotThree.instructions = missionThree.robotDirection;
+            expect( robotThree.move ).to.be.equal('3 3 N LOST');
+        });
     });
 });

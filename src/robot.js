@@ -15,7 +15,8 @@ module.exports = class Robot {
             dimensions: {
                 x: 0,
                 y: 0
-            }
+            },
+            isLost: false,
         }
     }
     set previousPosition( position ) {
@@ -62,9 +63,14 @@ module.exports = class Robot {
                     break;
 
                 case 'f':
+                    if ( this.isInBoundaries( ) ) {
                         this.moveForward( this.finalPosition.orientation );
+                    }
                     break;
             }
+        }
+        if ( this.isOutBoundaries( ) ) {
+            this.data.isLost = true;
         }
         return this.finalPositionString( );
     }
@@ -113,6 +119,31 @@ module.exports = class Robot {
     }
 
     finalPositionString( ) {
+        if ( this.data.isLost ) {
+            return `${this.finalPosition.x} ${this.finalPosition.y} ${this.finalPosition.orientation.toUpperCase()} LOST`
+        }
         return `${this.finalPosition.x} ${this.finalPosition.y} ${this.finalPosition.orientation.toUpperCase()}`
+    }
+
+    isInBoundaries(  ) {
+        if ( this.finalPosition.x > this.worldDimensions.x && this.finalPosition.x < 0 ) {
+            return true;
+        }
+
+        if ( this.finalPosition.y > this.worldDimensions.y && this.finalPosition.x < 0 ) {
+            return true;
+        }
+        return false;
+    }
+
+    isOutBoundaries( ) {
+        if ( this.finalPosition.x >= this.worldDimensions.x || this.finalPosition.x < 0 ) {
+            return true;
+        }
+
+        if ( this.finalPosition.y >= this.worldDimensions.y || this.finalPosition.y < 0) {
+            return true;
+        }
+        return false;
     }
 }

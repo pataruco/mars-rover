@@ -16,4 +16,17 @@ describe('MissionControl', ( ) => {
             expect( missionControl ).to.be.an.instanceof( MissionControl );
         });
     });
+
+    // - GET coordinates
+    describe('coordinates', ( ) => {
+        before( ( ) => {
+            missionControl.coordinates = '5 3';
+        })
+
+        //  check if coordinates match pattern
+        it('should SET coordinates', ( ) => {
+            expect( missionControl.data.coordinates ).to.include({x: 5, y:3})
+        });
+
+    })
 });

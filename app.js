@@ -62,7 +62,19 @@ function getRobotInstructions( ) {
         if ( result ) {
             mission.robotDirection = result.robotDirection;
         }
+        setRobotInstructions( )
     });
+}
+
+function setRobotInstructions( ) {
+    const robot = new Robot( );
+    robot.finalPosition = mission.robotPosition;
+    robot.instructions = mission.robotDirection;
+    robot.worldDimensions = mission.coordinates;
+    robot.lostContactCoordinates = mission.lostContactCoordinates;
+
+    const message = 'Mission Control|> ' + robot.move;
+    console.log( message );
 }
 
 function start ( ) {

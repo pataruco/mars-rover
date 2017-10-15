@@ -61,4 +61,18 @@ describe('Robot', ( ) => {
             expect( robot.finalPosition ).to.include({x: 2, y:2, orientation: 'e'})
         });
     });
+
+    describe('instructions', ( ) => {
+        it('should SET instructions', ( ) => {
+            missionControl.robotDirection = 'RFRFRFRF';
+            robot.instructions = missionControl.robotDirection;
+            expect( robot.data.instructions ).to.be.equalTo(['r','f','r','f','r','f','r','f']);
+        });
+
+        it('should GET instructions', ( ) => {
+            missionControl.robotDirection = 'RFRFRFRF';
+            robot.instructions = missionControl.robotDirection;
+            expect( robot.instructions ).to.be.equalTo(['r','f','r','f','r','f','r','f']);
+        });
+    });
 });

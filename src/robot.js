@@ -21,12 +21,20 @@ module.exports = class Robot {
     get previousPosition( ) {
         return this.data.previousPosition;
     }
-    
+
     set finalPosition( position ) {
         return this.data.finalPosition = position;
     }
 
     get finalPosition( ) {
         return this.data.finalPosition;
+    }
+    
+    set instructions( instructionsArray ) {
+        return this.data.instructions = instructionsArray;
+    }
+
+    get instructions()  {
+        return this.data.instructions;
     }
 }

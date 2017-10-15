@@ -1,7 +1,11 @@
 const chai = require('chai');
 const expect = require('chai').expect;
 const mocha = require('mocha');
+const assertArrays = require('chai-arrays');
 const MissionControl = require('../src/mission-control.js');
+chai.use(assertArrays);
+chai.should();
+chai.use(require('chai-things'));
 
 describe('MissionControl', ( ) => {
     // - Create a command control class to manage user input and output
@@ -78,6 +82,34 @@ describe('MissionControl', ( ) => {
                 const mission = new MissionControl( );
                 mission.robotPosition = '11E'
                 expect(mission.robotPosition).to.be.false;
+            });
+        });
+    });
+    describe('robot direction', ( )=> {
+         it('should SET a robot direction', ( ) => {
+              missionControl.robotDirection = 'RFRFRFRF';
+              expect( missionControl.data.robotDirection ).to.to.be.equalTo(['r','f','r','f','r','f','r','f'])
+              expect( missionControl.data.robotDirection[0] ).to.be.equal('r')
+              expect( missionControl.data.robotDirection[ missionControl.data.robotDirection.length -1 ] ).to.be.equal('f')
+         });
+
+         it('should GET a robot direction', ( ) => {
+              missionControl.robotDirection = 'FRRFLLFFRRFLL';
+              expect( missionControl.robotDirection ).to.be.equalTo([ 'f', 'r', 'r', 'f', 'l', 'l', 'f', 'f', 'r', 'r', 'f', 'l', 'l' ])
+         });
+
+         describe('error ', ( ) => {
+            it('should return false when user input does not match instructions pattern', ( ) => {
+                let mission = new MissionControl( );
+                mission.robotPosition = 'adkjahs';
+                expect(mission.robotDirection).to.be.false;
+            });
+
+            it('should return null when instruction string is greater than 100 characters', ( ) => {
+                let missionTwo = new MissionControl( );
+                const string = 'RFRFRFRF'.repeat(20);
+                missionTwo.robotDirection = string;
+                expect(missionTwo.robotDirection).to.be.null;
             });
         });
     });

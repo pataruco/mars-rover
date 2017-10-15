@@ -9,7 +9,8 @@ module.exports = class MissionControl {
                 x: 0,
                 y: 0,
                 orientation: 'n'
-           }
+            },
+            robotDirection: false,
         }
     }
 
@@ -70,6 +71,21 @@ module.exports = class MissionControl {
         if ( this.data.robotPosition.y > 50) {
             this.data.robotPosition.y = 50;
         }
+    }
+    set robotDirection( string ) {
+        if ( string.length > 100 ) {
+            return this.data.robotDirection = null;
+        }
+         const pattern = /^[RrLlFf]+$/g;
+         const isARobotDirectionString = pattern.test( string )
+         if ( isARobotDirectionString ) {
+              return this.data.robotDirection = string.toLowerCase().split('')
+         }
+         return this.data.robotDirection = false
+    }
+
+    get robotDirection( ) {
+         return this.data.robotDirection;
     }
 
 }

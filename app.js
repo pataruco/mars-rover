@@ -28,6 +28,17 @@ const robotPositionSchema = {
     }
 };
 
+const robotDirectionSchema = {
+    properties: {
+        robotDirection: {
+            description: 'Please, enter robot instructions',
+            pattern: /^[RrLlFf]+$/g,
+            message: 'Instructions is a string of the letters “L”, “R”, and “F”',
+            required: true
+        }
+    }
+};
+
 function getWorldDimensions( ) {
     prompt.get( dimensionsSchema, ( error, result ) => {
         if ( result ) {
@@ -42,7 +53,16 @@ function getRobotPosition( ) {
         if ( result ) {
             mission.robotPosition = result.robotPosition;
         }
+        getRobotInstructions( );
     })
+}
+
+function getRobotInstructions( ) {
+    prompt.get( robotDirectionSchema, ( error, result ) => {
+        if ( result ) {
+            mission.robotDirection = result.robotDirection;
+        }
+    });
 }
 
 function start ( ) {

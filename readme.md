@@ -2,6 +2,68 @@
 ## What it is?
 Is code challenge built on JavaScript, Wohoo!
 
+## Requirements
+- Node >= 8.6.0
+
+## Technologies
+- [Colors 1.1.2](https://github.com/Marak/colors.js)
+- [Prompt 1.0.0](https://github.com/flatiron/prompt)
+
+## Installation
+ _I am assuming you have **Node > 8.6.0** installed in your machine_
+
+ **On your terminal console**
+ - Clone this repo
+     - `git@github.com:pataruco/mars-rover.git`
+
+- Go to to folder mars-rover
+
+  - `cd mars-rover`
+
+- Install dependencies
+
+  - `npm install`
+
+## How to run it
+ **On your terminal console**
+
+- Inside mars-rover folder run
+    - `npm start`
+
+Then the programme would ask ask you for a set of instructions.
+
+You can introduce this if you like:
+
+**World Dimensions **
+
+- `5 3`
+
+** Robot 1 **
+
+- coordinate `1 1 E`
+
+- instructions `RFRFRFRF`
+
+** Robot 2 **
+
+- coordinate `3 2 N`
+
+- instructions `FRRFLLFFRRFLL`
+
+** Robot 3 **
+
+- coordinate `0 3 W`
+
+- instructions `LLFFFLFLFL`
+
+## Testing
+
+ **On your terminal console**
+- `npm install -g mocha`
+
+- Inside folder mars-rover
+    - `npm run test`
+
 ## The problem
 The surface of Mars can be modelled by a rectangular grid around which robots are able to move according to instructions provided from Earth.
 
@@ -53,43 +115,6 @@ For each robot position/instruction in the input, the output should indicate the
 `11E` \\ *Robot 1 coordinates after instructions*<br>
 `33NLOST` \\ *Robot 2 coordinates after instructions*<br>
 `23S` \\ *Robot 3 coordinates after instructions* <br>*
-
-## How to install
-
-* Git clone this repo
-	* `git@github.com:pataruco/mars-rover.git`
-
-* Get inside mars-rover directory in your machine
-
-	* `cd mars-rover`
-
-* Install dependencies run
-
-	* `npm install`
-
-## How to run the program
-Once it is installed in your machine and inside the mars-rover
-
-`npm start`
-
-Then the programme would ask ask you for a set of instructions. You can introduce this if you like.
-
-`53`<br>
-`11E`<br>
-`RFRFRFRF`<br>
-
-`32N`<br>
-`FRRFLLFFRRFLL`<br>
-
-`03W`<br>
-`LLFFFLFLFL`<br>
-`END`<br>
-
-
-## How to run tests
-Run the following command to run tests
-
-`npm run test`
 
 ### Some notes
 Sorry, are in *spanglish*

@@ -17,10 +17,30 @@ const dimensionsSchema = {
     }
 };
 
+const robotPositionSchema = {
+    properties: {
+        robotPosition: {
+            description: 'Please, enter robot coordinates',
+            pattern: /^\d{1,2}?\s\d{1,2}\s[NnEeSsWw]$/g,
+            message: 'Coordinates must be two integers and an orientation (N, S, E, W) separated by a space',
+            required: true
+        }
+    }
+};
+
 function getWorldDimensions( ) {
     prompt.get( dimensionsSchema, ( error, result ) => {
         if ( result ) {
             mission.coordinates = result.coordinates;
+        }
+        getRobotPosition ( );
+    })
+}
+
+function getRobotPosition( ) {
+    prompt.get( robotPositionSchema, ( error, result ) => {
+        if ( result ) {
+            mission.robotPosition = result.robotPosition;
         }
     })
 }

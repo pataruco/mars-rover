@@ -34,23 +34,23 @@ Then the programme would ask ask you for a set of instructions.
 
 You can introduce this if you like:
 
-**World Dimensions **
+**World Dimensions**
 
 - `5 3`
 
-** Robot 1 **
+**Robot 1**
 
 - coordinate `1 1 E`
 
 - instructions `RFRFRFRF`
 
-** Robot 2 **
+**Robot 2**
 
 - coordinate `3 2 N`
 
 - instructions `FRRFLLFFRRFLL`
 
-** Robot 3 **
+**Robot 3**
 
 - coordinate `0 3 W`
 

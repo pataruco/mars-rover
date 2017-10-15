@@ -89,4 +89,18 @@ describe('Robot', ( ) => {
             expect( robotOne.data.dimensions ).to.include({x:5, y:3});
         });
     });
+
+    describe('Movement', ( ) => {
+        it('should move from 1 1 E to coordinate 1 1 E when instructions RFRFRFRF are set', ( ) => {
+            const missionTwo = new MissionControl( )
+            const robotTwo = new Robot( )
+            missionTwo.coordinates = '5 3';
+            missionTwo.robotDirection = 'RFRFRFRF';
+            missionTwo.robotPosition = '1 1 E';
+            robotTwo.worldDimensions = missionTwo.coordinates;
+            robotTwo.finalPosition = missionTwo.robotPosition;
+            robotTwo.instructions = missionTwo.robotDirection;
+            expect( robotTwo.move ).to.be.equal('1 1 E');
+        });
+    });
 });

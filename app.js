@@ -2,6 +2,7 @@ const MissionControl = require('./src/mission-control.js');
 const Robot = require('./src/robot.js');
 const prompt = require('prompt');
 
+
 prompt.start( );
 
 const mission = new MissionControl( );
@@ -9,7 +10,7 @@ const mission = new MissionControl( );
 const dimensionsSchema = {
     properties: {
         coordinates: {
-            description:'Please, enter grid dimensions' ,
+            description: 'Please, enter grid dimensions',
             pattern: /^\d{1,2}?\s\d{1,2}?$/g,
             message: 'dimensions must be a pair of integers separated by a space',
             required: true
@@ -38,6 +39,18 @@ const robotDirectionSchema = {
         }
     }
 };
+
+const getAnotherRobotSchema = {
+    properties: {
+        anotherRobot: {
+            description: 'Do you want to deploy another robot (Y)es or (N)',
+            pattern: /^(?:[Yy]|[Nn])$/,
+            message: 'Answer is Y or N' ,
+            required: true
+        }
+    }
+};
+
 
 function getWorldDimensions( ) {
     prompt.get( dimensionsSchema, ( error, result ) => {
@@ -75,6 +88,24 @@ function setRobotInstructions( ) {
 
     const message = 'Mission Control|> ' + robot.move;
     console.log( message );
+
+    if( robot.data.isLost ) {
+        mission.lostContactCoordinates = robot.lostCoordinates;
+    }
+
+    getAnotherRobot( );
+}
+
+function getAnotherRobot( ) {
+    prompt.get( getAnotherRobotSchema, ( error, result ) => {
+        if ( result ) {
+            if ( result.anotherRobot.toLowerCase() === 'y' ) {
+                getRobotPosition( )
+            } else {
+                console.log('Mission Control|> Over and Out');
+            }
+        }
+    });
 }
 
 function start ( ) {

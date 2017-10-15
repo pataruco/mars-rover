@@ -16,9 +16,13 @@ module.exports = class MissionControl {
         }
         return this.data.coordinates = false;
     }
-    
+
     setCoordinatesObject( string ) {
         this.data.coordinates.x = parseInt( string.split(' ')[0] );
         this.data.coordinates.y = parseInt( string.split(' ')[1] );
+    }
+
+    get coordinates( ) {
+        return this.data.coordinates;
     }
 }

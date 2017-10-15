@@ -28,5 +28,9 @@ describe('MissionControl', ( ) => {
             expect( missionControl.data.coordinates ).to.include({x: 5, y:3})
         });
 
+        it('should GET coordinates', ( ) => {
+            expect( missionControl.coordinates ).to.include({x: 5, y:3})
+        });
+
     })
 });

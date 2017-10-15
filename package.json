@@ -21,5 +21,8 @@
     "chai-arrays": "^1.1.0",
     "chai-things": "^0.2.0",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "prompt": "^1.0.0"
   }
 }

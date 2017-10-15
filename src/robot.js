@@ -17,6 +17,8 @@ module.exports = class Robot {
                 y: 0
             },
             isLost: false,
+            lostContactCoordinates: false,
+            isStopped: false
         }
     }
     set previousPosition( position ) {
@@ -63,7 +65,7 @@ module.exports = class Robot {
                     break;
 
                 case 'f':
-                    if ( this.isInBoundaries( ) ) {
+                    if ( this.isInBoundaries( ) || !this.isOnLostCoordinate( ) ) {
                         this.moveForward( this.finalPosition.orientation );
                     }
                     break;
@@ -119,6 +121,10 @@ module.exports = class Robot {
     }
 
     finalPositionString( ) {
+        if ( this.data.isStopped ) {
+            return `${this.finalPosition.x} ${this.finalPosition.y} ${this.finalPosition.orientation.toUpperCase()}`
+        }
+
         if ( this.data.isLost ) {
             return `${this.finalPosition.x} ${this.finalPosition.y} ${this.finalPosition.orientation.toUpperCase()} LOST`
         }
@@ -145,5 +151,31 @@ module.exports = class Robot {
             return true;
         }
         return false;
+    }
+
+    isOnLostCoordinate( ) {
+        const stringLostCoordinates = JSON.stringify( this.lostContactCoordinates );
+        const stringFinalPosition = JSON.stringify( this.finalPosition );
+        const isOnLostCoordinate = stringLostCoordinates.includes( stringFinalPosition );
+        if ( isOnLostCoordinate ) {
+            this.data.isStopped = true;
+        }
+        return isOnLostCoordinate;
+    }
+
+    set lostContactCoordinates( coordinates ) {
+        this.data.lostContactCoordinates = coordinates;
+    }
+
+    get lostContactCoordinates ( ) {
+        return this.data.lostContactCoordinates;
+    }
+    
+    get lostCoordinates( ) {
+        return {
+            x: this.finalPosition.x,
+            y: this.finalPosition.y,
+            orientation: this.finalPosition.orientation
+        }
     }
 }

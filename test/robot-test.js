@@ -4,9 +4,10 @@ const mocha = require('mocha');
 const Robot = require('../src/robot.js');
 const assertArrays = require('chai-arrays');
 chai.use(assertArrays);
+const MissionControl = require('../src/mission-control.js');
 
 describe('Robot', ( ) => {
-
+    const missionControl = new MissionControl( );
     const robot = new Robot( );
 
     describe('Intantiation', ( ) => {
@@ -14,7 +15,7 @@ describe('Robot', ( ) => {
             expect( robot ).to.be.an.instanceof( Robot );
         });
     });
-    
+
     describe('Constructor', ( ) => {
         it('should have an previous position', ( ) =>{
             expect( robot.data.previousPosition ).to.include({x: 0, y:0, orientation: 'n'})
@@ -26,6 +27,22 @@ describe('Robot', ( ) => {
 
         it('should have an array of instructions', ( ) =>{
             expect( robot.data.instructions ).to.be.array( );
+        });
+    });
+
+    describe('Previous position', ( ) => {
+        it('should SET a previous position', ( ) => {
+            missionControl.coordinates = '5 3';
+            missionControl.robotPosition = '2 2 E';
+            robot.previousPosition = missionControl.robotPosition;
+            expect( robot.data.previousPosition ).to.include({x: 2, y:2, orientation: 'e'})
+        });
+
+        it('should GET a previous position', ( ) => {
+            missionControl.coordinates = '5 3';
+            missionControl.robotPosition = '2 2 E';
+            robot.previousPosition = missionControl.robotPosition;
+            expect( robot.previousPosition ).to.include({x: 2, y:2, orientation: 'e'})
         });
     });
 });

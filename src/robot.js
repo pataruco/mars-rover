@@ -14,4 +14,11 @@ module.exports = class Robot {
             instructions: []
         }
     }
+    set previousPosition( position ) {
+        return this.data.previousPosition = position;
+    }
+
+    get previousPosition( ) {
+        return this.data.previousPosition;
+    }
 }

@@ -14,4 +14,18 @@ describe('Robot', ( ) => {
             expect( robot ).to.be.an.instanceof( Robot );
         });
     });
+    
+    describe('Constructor', ( ) => {
+        it('should have an previous position', ( ) =>{
+            expect( robot.data.previousPosition ).to.include({x: 0, y:0, orientation: 'n'})
+        });
+
+        it('should have an final position', ( ) =>{
+            expect( robot.data.finalPosition ).to.include({x: 0, y:0, orientation: 'n'})
+        });
+
+        it('should have an array of instructions', ( ) =>{
+            expect( robot.data.instructions ).to.be.array( );
+        });
+    });
 });

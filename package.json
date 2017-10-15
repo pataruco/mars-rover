@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha"
+    "test": "node_modules/mocha/bin/mocha",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "chai-arrays": "^1.1.0",
     "chai-things": "^0.2.0",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "prompt": "^1.0.0"
   }
 }

@@ -11,6 +11,7 @@ module.exports = class MissionControl {
                 orientation: 'n'
             },
             robotDirection: false,
+            lostContactCoordinates: []
         }
     }
 
@@ -86,6 +87,14 @@ module.exports = class MissionControl {
 
     get robotDirection( ) {
          return this.data.robotDirection;
+    }
+
+    set lostContactCoordinates( coordinates ) {
+        this.data.lostContactCoordinates.push( coordinates );
+    }
+
+    get lostContactCoordinates ( ) {
+        return this.data.lostContactCoordinates;
     }
 
 }

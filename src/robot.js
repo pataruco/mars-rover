@@ -4,21 +4,21 @@ module.exports = class Robot {
       previousPosition: {
         x: 0,
         y: 0,
-        orientation: "n"
+        orientation: 'n',
       },
       finalPosition: {
         x: 0,
         y: 0,
-        orientation: "n"
+        orientation: 'n',
       },
       instructions: [],
       dimensions: {
         x: 0,
-        y: 0
+        y: 0,
       },
       isLost: false,
       lostContactCoordinates: false,
-      isStopped: false
+      isStopped: false,
     };
   }
   set previousPosition(position) {
@@ -57,20 +57,20 @@ module.exports = class Robot {
     for (let instruction of this.instructions) {
       this.previousPosition = this.finalPosition;
       switch (instruction) {
-        case "r":
+        case 'r':
           this.finalPosition.orientation = this.checkRudder(
-            "r",
-            this.finalPosition.orientation
+            'r',
+            this.finalPosition.orientation,
           );
           break;
-        case "l":
+        case 'l':
           this.finalPosition.orientation = this.checkRudder(
-            "l",
-            this.finalPosition.orientation
+            'l',
+            this.finalPosition.orientation,
           );
           break;
 
-        case "f":
+        case 'f':
           if (this.isInBoundaries() || !this.isOnLostCoordinate()) {
             this.moveForward(this.finalPosition.orientation);
           }
@@ -84,14 +84,14 @@ module.exports = class Robot {
   }
 
   checkRudder(instruction, orientation) {
-    const rudder = ["n", "e", "s", "w"];
+    const rudder = ['n', 'e', 's', 'w'];
 
     let index;
-    if (instruction === "r") {
+    if (instruction === 'r') {
       index = rudder.indexOf(orientation) + 1;
     }
 
-    if (instruction === "l") {
+    if (instruction === 'l') {
       index = rudder.indexOf(orientation) - 1;
     }
 
@@ -111,16 +111,16 @@ module.exports = class Robot {
 
   moveForward(orientation) {
     switch (orientation) {
-      case "n":
+      case 'n':
         this.finalPosition.y++;
         break;
-      case "e":
+      case 'e':
         this.finalPosition.x++;
         break;
-      case "s":
+      case 's':
         this.finalPosition.y--;
         break;
-      case "w":
+      case 'w':
         this.finalPosition.x--;
         break;
     }
@@ -181,7 +181,7 @@ module.exports = class Robot {
     const stringLostCoordinates = JSON.stringify(this.lostContactCoordinates);
     const stringFinalPosition = JSON.stringify(this.finalPosition);
     const isOnLostCoordinate = stringLostCoordinates.includes(
-      stringFinalPosition
+      stringFinalPosition,
     );
     if (isOnLostCoordinate) {
       this.data.isStopped = true;
@@ -201,7 +201,7 @@ module.exports = class Robot {
     return {
       x: this.finalPosition.x,
       y: this.finalPosition.y,
-      orientation: this.finalPosition.orientation
+      orientation: this.finalPosition.orientation,
     };
   }
 };

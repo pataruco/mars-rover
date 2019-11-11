@@ -3,15 +3,15 @@ module.exports = class MissionControl {
     this.data = {
       coordinates: {
         x: 0,
-        y: 0,
+        y: 0
       },
       robotPosition: {
         x: 0,
         y: 0,
-        orientation: 'n',
+        orientation: "n"
       },
       robotDirection: false,
-      lostContactCoordinates: [],
+      lostContactCoordinates: []
     };
   }
 
@@ -25,8 +25,8 @@ module.exports = class MissionControl {
   }
 
   setCoordinatesObject(string) {
-    this.data.coordinates.x = parseInt(string.split(' ')[0]);
-    this.data.coordinates.y = parseInt(string.split(' ')[1]);
+    this.data.coordinates.x = parseInt(string.split(" ")[0]);
+    this.data.coordinates.y = parseInt(string.split(" ")[1]);
   }
 
   get coordinates() {
@@ -47,9 +47,9 @@ module.exports = class MissionControl {
   }
 
   setRobotPositionObject(string) {
-    this.data.robotPosition.x = parseInt(string.split(' ')[0]);
-    this.data.robotPosition.y = parseInt(string.split(' ')[1]);
-    this.data.robotPosition.orientation = string.split(' ')[2].toLowerCase();
+    this.data.robotPosition.x = parseInt(string.split(" ")[0]);
+    this.data.robotPosition.y = parseInt(string.split(" ")[1]);
+    this.data.robotPosition.orientation = string.split(" ")[2].toLowerCase();
     return this.checkRobotPositionOnTheGrid();
   }
 
@@ -80,7 +80,7 @@ module.exports = class MissionControl {
     const pattern = /^[RrLlFf]+$/g;
     const isARobotDirectionString = pattern.test(string);
     if (isARobotDirectionString) {
-      return (this.data.robotDirection = string.toLowerCase().split(''));
+      return (this.data.robotDirection = string.toLowerCase().split(""));
     }
     return (this.data.robotDirection = false);
   }

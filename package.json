@@ -1,30 +1,29 @@
 {
-  "name": "mars-rover",
+  "name": "mars-rovers",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "node_modules/mocha/bin/mocha",
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pataruco/mars-rover.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pataruco/mars-rover/issues"
-  },
-  "homepage": "https://github.com/pataruco/mars-rover#readme",
+  "repository": "git@github.com:pataruco/mars-rover.git",
+  "author": "Pedro Martin <pataruco@gmail.com>",
+  "license": "MIT",
+  "private": true,
   "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-arrays": "^1.1.0",
-    "chai-things": "^0.2.0",
-    "mocha": "^4.0.1"
+    "eslint": "^8.12.0",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
   },
-  "dependencies": {
-    "colors": "^1.1.2",
-    "prompt": "^1.0.0"
+  "workspaces": [
+    "javascript",
+    "typescript"
+  ],
+  "lint-staged": {
+    "*.{js,json,yml,md,css,scss}": [
+      "yarn prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "yarn eslint --fix",
+      "yarn prettier --write"
+    ]
   }
 }

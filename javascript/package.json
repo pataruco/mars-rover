@@ -1,0 +1,30 @@
+{
+  "name": "@mars-rovers/javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pataruco/mars-rover.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pataruco/mars-rover/issues"
+  },
+  "homepage": "https://github.com/pataruco/mars-rover#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-arrays": "^1.1.0",
+    "chai-things": "^0.2.0",
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "prompt": "^1.0.0"
+  }
+}

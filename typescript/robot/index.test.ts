@@ -73,10 +73,19 @@ describe('Robot', () => {
   });
 
   it('moves to a new position', () => {
-    const robot = new Robot(robotTwoParams);
-    robot.move();
+    const robotOne = new Robot(robotOneParams);
+    robotOne.move();
 
-    expect(robot.data.finalPosition).toEqual({
+    const robotTwo = new Robot(robotTwoParams);
+    robotTwo.move();
+
+    expect(robotOne.data.finalPosition).toEqual({
+      x: 1,
+      y: 1,
+      orientation: 'e',
+    });
+
+    expect(robotTwo.data.finalPosition).toEqual({
       x: 3,
       y: 3,
       orientation: 'n',

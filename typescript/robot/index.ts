@@ -102,6 +102,12 @@ export default class Robot {
   }
 
   public move() {
+    if (!this.isInBoundaries(this.data.finalPosition)) {
+      this.data.finalPosition = this.data.previousPosition;
+      this.data.isLost = true;
+      this.data.isStopped = true;
+    }
+
     for (let instruction of this.data.instructions) {
       this.data.previousPosition = this.data.finalPosition;
       switch (instruction) {
@@ -123,12 +129,6 @@ export default class Robot {
           } else {
           }
           break;
-      }
-
-      if (!this.isInBoundaries(this.data.finalPosition)) {
-        this.data.finalPosition = this.data.previousPosition;
-        this.data.isLost = true;
-        this.data.isStopped = true;
       }
 
       console.log(this.data.finalPosition);

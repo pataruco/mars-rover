@@ -75,7 +75,7 @@ describe('Robot', () => {
     });
   });
 
-  it.only('moves to a new position', () => {
+  it('moves to a new position', () => {
     const robotOne = new Robot(robotOneParams);
     robotOne.move();
 

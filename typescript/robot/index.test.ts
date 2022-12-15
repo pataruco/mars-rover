@@ -69,10 +69,13 @@ describe('Robot', () => {
       instructions,
       previousPosition: initialPosition,
       finalPosition: initialPosition,
+      isLost: false,
+      isStopped: false,
+      lostRobotsCoordinates: {},
     });
   });
 
-  it('moves to a new position', () => {
+  it.only('moves to a new position', () => {
     const robotOne = new Robot(robotOneParams);
     robotOne.move();
 
@@ -90,5 +93,35 @@ describe('Robot', () => {
       y: 3,
       orientation: 'n',
     });
+  });
+
+  it('moves to a new position within boundaries', () => {
+    const robot = new Robot({
+      worldDimensions: {
+        x: 5,
+        y: 3,
+      },
+      instructions: [
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+        'f',
+      ],
+      initialPosition: {
+        x: 1,
+        y: 1,
+        orientation: 'n',
+      },
+    });
+
+    robot.move();
   });
 });

@@ -11,6 +11,14 @@ interface Position extends Coordinate {
 
 type Instruction = 'l' | 'r' | 'f';
 
+type LostRobotCoordinate = Record<number, Record<number, boolean>>;
+
+const lostRobotsCoordinates: LostRobotCoordinate = {
+  10: {
+    20: true,
+  },
+};
+
 export interface RobotParams {
   worldDimensions: Coordinate;
   instructions: Instruction[];
@@ -24,6 +32,8 @@ export default class Robot {
     instructions: Instruction[];
     dimensions: Coordinate;
     isLost: boolean;
+    isStopped: boolean;
+    lostRobotsCoordinates: LostRobotCoordinate;
   };
 
   constructor({
@@ -44,7 +54,9 @@ export default class Robot {
       },
       instructions,
       dimensions: worldDimensions,
-      isLost: !this.isInBoundaries(),
+      isLost: false,
+      isStopped: false,
+      lostRobotsCoordinates: {},
     };
   }
 
@@ -106,20 +118,42 @@ export default class Robot {
           );
           break;
         case 'f':
-          this.moveForward(this.data.finalPosition.orientation);
+          if (!this.data.isStopped) {
+            this.moveForward(this.data.finalPosition.orientation);
+          } else {
+          }
           break;
       }
+
+      if (!this.isInBoundaries(this.data.finalPosition)) {
+        this.data.finalPosition = this.data.previousPosition;
+        this.data.isLost = true;
+        this.data.isStopped = true;
+      }
+
+      console.log(this.data.finalPosition);
     }
   }
 
-  private isInBoundaries() {
+  private gotScentAndCouldMoveOutBoundaries({
+    previousPosition,
+    finalPosition,
+  }: {
+    previousPosition: Position;
+    finalPosition: Position;
+  }) {
+    const isOnScentPosition =
+      this.data.lostRobotsCoordinates[previousPosition.x][previousPosition.y];
+
+    // const couldMoveOutBoundaries =
+  }
+
+  private isInBoundaries(position: Position) {
     const isWithinHorizontalBoundaries =
-      this.data.finalPosition.x >= 0 &&
-      this.data.finalPosition.x <= this.data.dimensions.x;
+      position.x >= 0 && position.x <= this.data.dimensions.x;
 
     const isWithinVerticalBoundaries =
-      this.data.finalPosition.y >= 0 &&
-      this.data.finalPosition.y <= this.data.dimensions.y;
+      position.y >= 0 && position.y <= this.data.dimensions.y;
 
     return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }

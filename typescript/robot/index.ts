@@ -23,6 +23,7 @@ export default class Robot {
     finalPosition: Position;
     instructions: Instruction[];
     dimensions: Coordinate;
+    isLost: boolean;
   };
 
   constructor({
@@ -43,10 +44,11 @@ export default class Robot {
       },
       instructions,
       dimensions: worldDimensions,
+      isLost: !this.isInBoundaries(),
     };
   }
 
-  checkRudder(instruction: Instruction, orientation: Orientation) {
+  private checkRudder(instruction: Instruction, orientation: Orientation) {
     const rudder: Orientation[] = ['n', 'e', 's', 'w'];
 
     let index = rudder.indexOf(orientation);
@@ -70,7 +72,7 @@ export default class Robot {
     return rudder[index];
   }
 
-  moveForward(orientation: Orientation) {
+  private moveForward(orientation: Orientation) {
     switch (orientation) {
       case 'n':
         this.data.finalPosition.y++;
@@ -108,5 +110,17 @@ export default class Robot {
           break;
       }
     }
+  }
+
+  private isInBoundaries() {
+    const isWithinHorizontalBoundaries =
+      this.data.finalPosition.x >= 0 &&
+      this.data.finalPosition.x <= this.data.dimensions.x;
+
+    const isWithinVerticalBoundaries =
+      this.data.finalPosition.y >= 0 &&
+      this.data.finalPosition.y <= this.data.dimensions.y;
+
+    return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }
 }

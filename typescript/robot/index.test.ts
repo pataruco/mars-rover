@@ -129,4 +129,28 @@ describe('Robot', () => {
       orientation: 'n',
     });
   });
+
+  it('reports last known coordinates when is lost', () => {
+    const robotOne = new Robot(robotOneParams);
+    robotOne.move();
+
+    const robotTwo = new Robot(robotTwoParams);
+    robotTwo.move();
+
+    expect(robotOne.data.position).toEqual({
+      x: 1,
+      y: 1,
+      orientation: 'e',
+    });
+
+    expect(robotOne.data.isLost).toBe(false);
+
+    expect(robotTwo.data.position).toEqual({
+      x: 3,
+      y: 3,
+      orientation: 'n',
+    });
+
+    expect(robotTwo.data.isLost).toBe(true);
+  });
 });

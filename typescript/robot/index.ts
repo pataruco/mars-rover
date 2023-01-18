@@ -13,7 +13,7 @@ type Instruction = 'l' | 'r' | 'f';
 
 type LostRobotCoordinate = Record<number, Record<number, boolean>>;
 
-const lostRobotsCoordinates: LostRobotCoordinate = {
+const lostRobotCoordinates: LostRobotCoordinate = {
   10: {
     20: true,
   },
@@ -27,13 +27,12 @@ export interface RobotParams {
 
 export default class Robot {
   data: {
-    previousPosition: Position;
-    finalPosition: Position;
+    position: Position;
     instructions: Instruction[];
     dimensions: Coordinate;
     isLost: boolean;
     isStopped: boolean;
-    lostRobotsCoordinates: LostRobotCoordinate;
+    lostRobotCoordinates: LostRobotCoordinate;
   };
 
   constructor({
@@ -42,12 +41,7 @@ export default class Robot {
     worldDimensions,
   }: RobotParams) {
     this.data = {
-      previousPosition: {
-        x,
-        y,
-        orientation,
-      },
-      finalPosition: {
+      position: {
         x,
         y,
         orientation,
@@ -56,7 +50,7 @@ export default class Robot {
       dimensions: worldDimensions,
       isLost: false,
       isStopped: false,
-      lostRobotsCoordinates: {},
+      lostRobotCoordinates: {},
     };
   }
 
@@ -87,72 +81,69 @@ export default class Robot {
   private moveForward(orientation: Orientation) {
     switch (orientation) {
       case 'n':
-        this.data.finalPosition.y++;
+        this.data.position.y++;
         break;
       case 'e':
-        this.data.finalPosition.x++;
+        this.data.position.x++;
         break;
       case 's':
-        this.data.finalPosition.y--;
+        this.data.position.y--;
         break;
       case 'w':
-        this.data.finalPosition.x--;
+        this.data.position.x--;
         break;
     }
   }
 
   public move() {
     for (let instruction of this.data.instructions) {
-      this.data.previousPosition = this.data.finalPosition;
       switch (instruction) {
         case 'r':
-          this.data.finalPosition.orientation = this.checkRudder(
+          this.data.position.orientation = this.checkRudder(
             'r',
-            this.data.finalPosition.orientation,
+            this.data.position.orientation,
           );
           break;
         case 'l':
-          this.data.finalPosition.orientation = this.checkRudder(
+          this.data.position.orientation = this.checkRudder(
             'l',
-            this.data.finalPosition.orientation,
+            this.data.position.orientation,
           );
           break;
         case 'f':
-          if (this.isInBoundaries()) {
-            this.moveForward(this.data.finalPosition.orientation);
+          if (this.isInBoundaries() && !this.data.isLost) {
+            this.moveForward(this.data.position.orientation);
           }
           break;
       }
 
-      if (!this.isInBoundaries()) {
+      if (!this.isInBoundaries() && !this.data.isLost) {
         this.data.isLost = true;
       }
-
-      console.log(this.data);
     }
   }
 
   private gotScentAndCouldMoveOutBoundaries({
     previousPosition,
-    finalPosition,
+    position,
   }: {
     previousPosition: Position;
-    finalPosition: Position;
+    position: Position;
   }) {
     const isOnScentPosition =
-      this.data.lostRobotsCoordinates[previousPosition.x][previousPosition.y];
+      this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y];
 
     // const couldMoveOutBoundaries =
   }
 
   private isInBoundaries() {
     const isWithinHorizontalBoundaries =
-      this.data.finalPosition.x >= 0 &&
-      this.data.finalPosition.x <= this.data.dimensions.x;
+      this.data.position.x >= 0 &&
+      this.data.position.x < this.data.dimensions.x;
 
     const isWithinVerticalBoundaries =
-      this.data.finalPosition.y >= 0 &&
-      this.data.finalPosition.y <= this.data.dimensions.y;
+      this.data.position.y >= 0 &&
+      this.data.position.y < this.data.dimensions.y;
 
     return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }

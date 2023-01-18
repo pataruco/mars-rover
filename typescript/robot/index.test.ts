@@ -67,28 +67,27 @@ describe('Robot', () => {
     expect(robot.data).toEqual({
       dimensions,
       instructions,
-      previousPosition: initialPosition,
-      finalPosition: initialPosition,
+      position: initialPosition,
       isLost: false,
       isStopped: false,
-      lostRobotsCoordinates: {},
+      lostRobotCoordinates: {},
     });
   });
 
-  it.only('moves to a new position', () => {
-    // const robotOne = new Robot(robotOneParams);
-    // robotOne.move();
+  it('moves to a new position', () => {
+    const robotOne = new Robot(robotOneParams);
+    robotOne.move();
 
     const robotTwo = new Robot(robotTwoParams);
     robotTwo.move();
 
-    // expect(robotOne.data.finalPosition).toEqual({
-    //   x: 1,
-    //   y: 1,
-    //   orientation: 'e',
-    // });
+    expect(robotOne.data.position).toEqual({
+      x: 1,
+      y: 1,
+      orientation: 'e',
+    });
 
-    expect(robotTwo.data.finalPosition).toEqual({
+    expect(robotTwo.data.position).toEqual({
       x: 3,
       y: 3,
       orientation: 'n',
@@ -124,9 +123,9 @@ describe('Robot', () => {
 
     robot.move();
 
-    expect(robot.data.finalPosition).toEqual({
+    expect(robot.data.position).toEqual({
       x: 1,
-      y: 4,
+      y: 3,
       orientation: 'n',
     });
   });

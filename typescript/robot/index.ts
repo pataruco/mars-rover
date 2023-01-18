@@ -102,12 +102,6 @@ export default class Robot {
   }
 
   public move() {
-    if (!this.isInBoundaries(this.data.finalPosition)) {
-      this.data.finalPosition = this.data.previousPosition;
-      this.data.isLost = true;
-      this.data.isStopped = true;
-    }
-
     for (let instruction of this.data.instructions) {
       this.data.previousPosition = this.data.finalPosition;
       switch (instruction) {
@@ -124,14 +118,17 @@ export default class Robot {
           );
           break;
         case 'f':
-          if (!this.data.isStopped) {
+          if (this.isInBoundaries()) {
             this.moveForward(this.data.finalPosition.orientation);
-          } else {
           }
           break;
       }
 
-      console.log(this.data.finalPosition);
+      if (!this.isInBoundaries()) {
+        this.data.isLost = true;
+      }
+
+      console.log(this.data);
     }
   }
 
@@ -148,12 +145,14 @@ export default class Robot {
     // const couldMoveOutBoundaries =
   }
 
-  private isInBoundaries(position: Position) {
+  private isInBoundaries() {
     const isWithinHorizontalBoundaries =
-      position.x >= 0 && position.x <= this.data.dimensions.x;
+      this.data.finalPosition.x >= 0 &&
+      this.data.finalPosition.x <= this.data.dimensions.x;
 
     const isWithinVerticalBoundaries =
-      position.y >= 0 && position.y <= this.data.dimensions.y;
+      this.data.finalPosition.y >= 0 &&
+      this.data.finalPosition.y <= this.data.dimensions.y;
 
     return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }

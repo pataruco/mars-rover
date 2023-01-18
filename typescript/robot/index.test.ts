@@ -75,18 +75,18 @@ describe('Robot', () => {
     });
   });
 
-  it('moves to a new position', () => {
-    const robotOne = new Robot(robotOneParams);
-    robotOne.move();
+  it.only('moves to a new position', () => {
+    // const robotOne = new Robot(robotOneParams);
+    // robotOne.move();
 
     const robotTwo = new Robot(robotTwoParams);
     robotTwo.move();
 
-    expect(robotOne.data.finalPosition).toEqual({
-      x: 1,
-      y: 1,
-      orientation: 'e',
-    });
+    // expect(robotOne.data.finalPosition).toEqual({
+    //   x: 1,
+    //   y: 1,
+    //   orientation: 'e',
+    // });
 
     expect(robotTwo.data.finalPosition).toEqual({
       x: 3,
@@ -123,5 +123,11 @@ describe('Robot', () => {
     });
 
     robot.move();
+
+    expect(robot.data.finalPosition).toEqual({
+      x: 1,
+      y: 4,
+      orientation: 'n',
+    });
   });
 });

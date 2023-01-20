@@ -13,7 +13,7 @@ export default class Robot {
   data: {
     position: Position;
     instructions: Instruction[];
-    dimensions: Coordinate;
+    dimensions?: Coordinate;
     isLost: boolean;
     isStopped: boolean;
     lostRobotCoordinates?: LostRobotCoordinate;
@@ -137,18 +137,24 @@ export default class Robot {
   }
 
   private isInBoundaries() {
-    const isWithinHorizontalBoundaries =
-      this.data.position.x >= 0 &&
-      this.data.position.x <= this.data.dimensions.x;
+    if (this.data.dimensions) {
+      const isWithinHorizontalBoundaries =
+        this.data.position.x >= 0 &&
+        this.data.position.x <= this.data.dimensions.x;
 
-    const isWithinVerticalBoundaries =
-      this.data.position.y >= 0 &&
-      this.data.position.y <= this.data.dimensions.y;
+      const isWithinVerticalBoundaries =
+        this.data.position.y >= 0 &&
+        this.data.position.y <= this.data.dimensions.y;
 
-    return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
+      return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
+    }
   }
 
   public setLostRobotCoordinates(lostRobotCoordinates: LostRobotCoordinate) {
     this.data.lostRobotCoordinates = lostRobotCoordinates;
+  }
+
+  public setworldDimensions(dimensions: Coordinate) {
+    this.data.dimensions = dimensions;
   }
 }

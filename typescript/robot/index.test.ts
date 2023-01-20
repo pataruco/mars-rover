@@ -6,8 +6,7 @@ const worldDimensions = {
   y: 3,
 };
 
-const robotOneParams: RobotParams = {
-  worldDimensions,
+export const robotOneParams: RobotParams = {
   instructions: ['r', 'f', 'r', 'f', 'r', 'f', 'r', 'f'],
   initialPosition: {
     x: 1,
@@ -16,8 +15,7 @@ const robotOneParams: RobotParams = {
   },
 };
 
-const robotTwoParams: RobotParams = {
-  worldDimensions,
+export const robotTwoParams: RobotParams = {
   instructions: [
     'f',
     'r',
@@ -40,8 +38,7 @@ const robotTwoParams: RobotParams = {
   },
 };
 
-const robotThreeParams: RobotParams = {
-  worldDimensions,
+export const robotThreeParams: RobotParams = {
   instructions: ['l', 'l', 'f', 'f', 'f', 'l', 'f', 'l', 'f', 'l'],
   initialPosition: {
     x: 0,
@@ -71,9 +68,13 @@ describe('Robot', () => {
 
   it('moves to a new position', () => {
     const robotOne = new Robot(robotOneParams);
+
+    robotOne.setworldDimensions(worldDimensions);
     robotOne.move();
 
     const robotTwo = new Robot(robotTwoParams);
+
+    robotTwo.setworldDimensions(worldDimensions);
     robotTwo.move();
 
     expect(robotOne.data.position).toEqual({
@@ -91,9 +92,13 @@ describe('Robot', () => {
 
   it('reports last known coordinates when is lost', () => {
     const robotOne = new Robot(robotOneParams);
+
+    robotOne.setworldDimensions(worldDimensions);
     robotOne.move();
 
     const robotTwo = new Robot(robotTwoParams);
+
+    robotTwo.setworldDimensions(worldDimensions);
     robotTwo.move();
 
     expect(robotOne.data.position).toEqual({
@@ -124,6 +129,8 @@ describe('Robot', () => {
     };
 
     const robotThree = new Robot(params);
+
+    robotThree.setworldDimensions(worldDimensions);
     robotThree.move();
 
     expect(robotThree.data.position).toEqual({
@@ -145,6 +152,7 @@ describe('Robot', () => {
       },
     });
 
+    robotThree.setworldDimensions(worldDimensions);
     robotThree.move();
 
     expect(robotThree.data.position).toEqual({

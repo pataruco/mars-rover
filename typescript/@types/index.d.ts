@@ -17,7 +17,7 @@ export type LostRobotCoordinate = Record<
 >;
 
 export interface RobotParams {
-  worldDimensions: Coordinate;
+  worldDimensions?: Coordinate;
   instructions: Instruction[];
   initialPosition: Position;
   lostRobotCoordinates?: LostRobotCoordinate;

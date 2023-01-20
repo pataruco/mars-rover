@@ -18,6 +18,8 @@ export default class World {
 
   moveRobots() {
     this.robots.map((robot) => {
+      robot.setworldDimensions(this.dimensions);
+
       robot.move();
 
       if (robot.data.isLost) {

@@ -11,7 +11,10 @@ export interface Position extends Coordinate {
 
 export type Instruction = 'l' | 'r' | 'f';
 
-export type LostRobotCoordinate = Record<number, Record<number, Orientation>>;
+export type LostRobotCoordinate = Record<
+  Coordinate['x'],
+  Record<Coordinate['y'], Orientation>
+>;
 
 export interface RobotParams {
   worldDimensions: Coordinate;

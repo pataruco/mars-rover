@@ -97,6 +97,8 @@ export default class Robot {
 
   public move() {
     for (let instruction of this.data.instructions) {
+      const previousPosition = { ...this.data.position };
+
       switch (instruction) {
         case 'r':
           this.data.position.orientation = this.checkRudder(
@@ -120,6 +122,10 @@ export default class Robot {
       if (!this.isInBoundaries() && !this.data.isLost) {
         this.data.isLost = true;
       }
+
+      const { position, isLost } = this.data;
+
+      console.log({ previousPosition, position, isLost });
     }
   }
 

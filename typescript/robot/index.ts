@@ -147,4 +147,8 @@ export default class Robot {
 
     return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }
+
+  public setLostRobotCoordinates(lostRobotCoordinates: LostRobotCoordinate) {
+    this.data.lostRobotCoordinates = lostRobotCoordinates;
+  }
 }

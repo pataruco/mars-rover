@@ -31,6 +31,10 @@ export default class World {
           };
         }
       }
+
+      if (this.lostRobotCoordinates) {
+        robot.setLostRobotCoordinates(this.lostRobotCoordinates);
+      }
     });
   }
 }

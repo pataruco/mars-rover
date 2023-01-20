@@ -48,11 +48,6 @@ const robotThreeParams: RobotParams = {
     y: 3,
     orientation: 'w',
   },
-  lostRobotCoordinates: {
-    3: {
-      3: 'n',
-    },
-  },
 };
 
 describe('Robot', () => {
@@ -118,8 +113,38 @@ describe('Robot', () => {
     expect(robotTwo.data.isLost).toBe(true);
   });
 
-  it("don't fell off of the grid when is in an scented coordinate", () => {
+  it("don't fell off of the grid when is in an scented coordinate are set by constructor", () => {
+    const params: RobotParams = {
+      ...robotThreeParams,
+      lostRobotCoordinates: {
+        3: {
+          3: 'n',
+        },
+      },
+    };
+
+    const robotThree = new Robot(params);
+    robotThree.move();
+
+    expect(robotThree.data.position).toEqual({
+      x: 2,
+      y: 3,
+      orientation: 's',
+    });
+
+    expect(robotThree.data.isLost).toBe(false);
+    expect(robotThree.lostCoordinate).toBeUndefined();
+  });
+
+  it("don't fell off of the grid when is in an scented coordinate are set by setter", () => {
     const robotThree = new Robot(robotThreeParams);
+
+    robotThree.setLostRobotCoordinates({
+      3: {
+        3: 'n',
+      },
+    });
+
     robotThree.move();
 
     expect(robotThree.data.position).toEqual({

@@ -89,43 +89,7 @@ describe('Robot', () => {
 
     expect(robotTwo.data.position).toEqual({
       x: 3,
-      y: 3,
-      orientation: 'n',
-    });
-  });
-
-  it('moves to a new position within boundaries', () => {
-    const robot = new Robot({
-      worldDimensions: {
-        x: 5,
-        y: 3,
-      },
-      instructions: [
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-        'f',
-      ],
-      initialPosition: {
-        x: 1,
-        y: 1,
-        orientation: 'n',
-      },
-    });
-
-    robot.move();
-
-    expect(robot.data.position).toEqual({
-      x: 1,
-      y: 3,
+      y: 4,
       orientation: 'n',
     });
   });

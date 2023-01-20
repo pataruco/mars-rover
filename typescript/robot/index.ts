@@ -11,11 +11,11 @@ interface Position extends Coordinate {
 
 type Instruction = 'l' | 'r' | 'f';
 
-type LostRobotCoordinate = Record<number, Record<number, boolean>>;
+type LostRobotCoordinate = Record<number, Record<number, Orientation>>;
 
 const lostRobotCoordinates: LostRobotCoordinate = {
   10: {
-    20: true,
+    20: 'n',
   },
 };
 
@@ -23,6 +23,11 @@ export interface RobotParams {
   worldDimensions: Coordinate;
   instructions: Instruction[];
   initialPosition: Position;
+}
+
+interface IsInOnALostCoordinate {
+  previousPosition: Position;
+  instruction: Instruction;
 }
 
 export default class Robot {
@@ -114,7 +119,14 @@ export default class Robot {
           );
           break;
         case 'f':
-          if (this.isInBoundaries() && !this.data.isLost) {
+          if (
+            this.isInBoundaries() &&
+            !this.data.isLost &&
+            !this.isInOnALostCoordinate({
+              previousPosition,
+              instruction,
+            })
+          ) {
             this.moveForward(this.data.position.orientation);
           }
           break;
@@ -136,22 +148,28 @@ export default class Robot {
         isLost,
         isInBoundaries: this.isInBoundaries(),
         lostCoordinate,
+        instruction,
       });
     }
   }
 
-  // private gotScentAndCouldMoveOutBoundaries({
-  //   previousPosition,
-  //   position,
-  // }: {
-  //   previousPosition: Position;
-  //   position: Position;
-  // }) {
-  //   const isOnScentPosition =
-  //     this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y];
+  private isInOnALostCoordinate({
+    previousPosition,
+    instruction,
+  }: IsInOnALostCoordinate) {
+    if (
+      this.data.lostRobotCoordinates &&
+      this.data.lostRobotCoordinates[previousPosition.x] &&
+      this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y] &&
+      this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y] ===
+        previousPosition.orientation &&
+      instruction === 'f'
+    ) {
+      return true;
+    }
 
-  //   // const couldMoveOutBoundaries =
-  // }
+    return false;
+  }
 
   private isInBoundaries() {
     const isWithinHorizontalBoundaries =

@@ -1,11 +1,13 @@
 import Robot from '.';
 import type { RobotParams } from '.';
 
+const worldDimensions = {
+  x: 5,
+  y: 3,
+};
+
 const robotOneParams: RobotParams = {
-  worldDimensions: {
-    x: 5,
-    y: 3,
-  },
+  worldDimensions,
   instructions: ['r', 'f', 'r', 'f', 'r', 'f', 'r', 'f'],
   initialPosition: {
     x: 1,
@@ -15,10 +17,7 @@ const robotOneParams: RobotParams = {
 };
 
 const robotTwoParams: RobotParams = {
-  worldDimensions: {
-    x: 5,
-    y: 3,
-  },
+  worldDimensions,
   instructions: [
     'f',
     'r',
@@ -42,11 +41,8 @@ const robotTwoParams: RobotParams = {
 };
 
 const robotThreeParams: RobotParams = {
-  worldDimensions: {
-    x: 5,
-    y: 3,
-  },
-  instructions: ['l', 'l', 'f', 'f', 'l', 'f', 'l', 'f', 'l'],
+  worldDimensions,
+  instructions: ['l', 'l', 'f', 'f', 'f', 'l', 'f', 'l', 'f', 'l'],
   initialPosition: {
     x: 0,
     y: 3,
@@ -116,5 +112,19 @@ describe('Robot', () => {
     });
 
     expect(robotTwo.data.isLost).toBe(true);
+  });
+
+  it.only("don't fell off of the grid when is in an scented coordinate", () => {
+    const robotThree = new Robot(robotThreeParams);
+    robotThree.move();
+
+    expect(robotThree.data.position).toEqual({
+      x: 2,
+      y: 3,
+      orientation: 's',
+    });
+
+    expect(robotThree.data.isLost).toBe(false);
+    expect(robotThree.lostCoordinate).toBeUndefined();
   });
 });

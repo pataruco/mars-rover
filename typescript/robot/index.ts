@@ -33,6 +33,7 @@ export default class Robot {
     isLost: boolean;
     isStopped: boolean;
     lostRobotCoordinates: LostRobotCoordinate;
+    lostCoordinate?: Position;
   };
 
   constructor({
@@ -121,35 +122,42 @@ export default class Robot {
 
       if (!this.isInBoundaries() && !this.data.isLost) {
         this.data.isLost = true;
+        this.data.lostCoordinate = { ...previousPosition };
       }
 
-      const { position, isLost } = this.data;
+      const { position, isLost, lostCoordinate } = this.data;
 
-      console.log({ previousPosition, position, isLost });
+      console.log({
+        previousPosition,
+        position,
+        isLost,
+        isInBoundaries: this.isInBoundaries(),
+        lostCoordinate,
+      });
     }
   }
 
-  private gotScentAndCouldMoveOutBoundaries({
-    previousPosition,
-    position,
-  }: {
-    previousPosition: Position;
-    position: Position;
-  }) {
-    const isOnScentPosition =
-      this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y];
+  // private gotScentAndCouldMoveOutBoundaries({
+  //   previousPosition,
+  //   position,
+  // }: {
+  //   previousPosition: Position;
+  //   position: Position;
+  // }) {
+  //   const isOnScentPosition =
+  //     this.data.lostRobotCoordinates[previousPosition.x][previousPosition.y];
 
-    // const couldMoveOutBoundaries =
-  }
+  //   // const couldMoveOutBoundaries =
+  // }
 
   private isInBoundaries() {
     const isWithinHorizontalBoundaries =
       this.data.position.x >= 0 &&
-      this.data.position.x < this.data.dimensions.x;
+      this.data.position.x <= this.data.dimensions.x;
 
     const isWithinVerticalBoundaries =
       this.data.position.y >= 0 &&
-      this.data.position.y < this.data.dimensions.y;
+      this.data.position.y <= this.data.dimensions.y;
 
     return isWithinHorizontalBoundaries && isWithinVerticalBoundaries;
   }

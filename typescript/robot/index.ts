@@ -23,6 +23,7 @@ export interface RobotParams {
   worldDimensions: Coordinate;
   instructions: Instruction[];
   initialPosition: Position;
+  lostRobotCoordinates?: LostRobotCoordinate;
 }
 
 interface IsInOnALostCoordinate {
@@ -38,13 +39,14 @@ export default class Robot {
     dimensions: Coordinate;
     isLost: boolean;
     isStopped: boolean;
-    lostRobotCoordinates: LostRobotCoordinate;
+    lostRobotCoordinates?: LostRobotCoordinate;
   };
 
   constructor({
     initialPosition: { x, y, orientation },
     instructions,
     worldDimensions,
+    lostRobotCoordinates,
   }: RobotParams) {
     this.data = {
       position: {
@@ -56,7 +58,7 @@ export default class Robot {
       dimensions: worldDimensions,
       isLost: false,
       isStopped: false,
-      lostRobotCoordinates: {},
+      lostRobotCoordinates,
     };
   }
 
@@ -136,20 +138,6 @@ export default class Robot {
         this.data.isLost = true;
         this.lostCoordinate = { ...previousPosition };
       }
-
-      const {
-        data: { position, isLost },
-        lostCoordinate,
-      } = this;
-
-      console.log({
-        previousPosition,
-        position,
-        isLost,
-        isInBoundaries: this.isInBoundaries(),
-        lostCoordinate,
-        instruction,
-      });
     }
   }
 

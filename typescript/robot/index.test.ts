@@ -48,6 +48,11 @@ const robotThreeParams: RobotParams = {
     y: 3,
     orientation: 'w',
   },
+  lostRobotCoordinates: {
+    3: {
+      3: 'n',
+    },
+  },
 };
 
 describe('Robot', () => {
@@ -66,7 +71,6 @@ describe('Robot', () => {
       position: initialPosition,
       isLost: false,
       isStopped: false,
-      lostRobotCoordinates: {},
     });
   });
 
@@ -114,7 +118,7 @@ describe('Robot', () => {
     expect(robotTwo.data.isLost).toBe(true);
   });
 
-  it.only("don't fell off of the grid when is in an scented coordinate", () => {
+  it("don't fell off of the grid when is in an scented coordinate", () => {
     const robotThree = new Robot(robotThreeParams);
     robotThree.move();
 

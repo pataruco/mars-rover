@@ -26,6 +26,7 @@ export interface RobotParams {
 }
 
 export default class Robot {
+  lostCoordinate?: Position;
   data: {
     position: Position;
     instructions: Instruction[];
@@ -33,7 +34,6 @@ export default class Robot {
     isLost: boolean;
     isStopped: boolean;
     lostRobotCoordinates: LostRobotCoordinate;
-    lostCoordinate?: Position;
   };
 
   constructor({
@@ -122,10 +122,13 @@ export default class Robot {
 
       if (!this.isInBoundaries() && !this.data.isLost) {
         this.data.isLost = true;
-        this.data.lostCoordinate = { ...previousPosition };
+        this.lostCoordinate = { ...previousPosition };
       }
 
-      const { position, isLost, lostCoordinate } = this.data;
+      const {
+        data: { position, isLost },
+        lostCoordinate,
+      } = this;
 
       console.log({
         previousPosition,

@@ -1,35 +1,12 @@
-interface Coordinate {
-  x: number;
-  y: number;
-}
-
-type Orientation = 'n' | 'e' | 's' | 'w';
-
-interface Position extends Coordinate {
-  orientation: Orientation;
-}
-
-type Instruction = 'l' | 'r' | 'f';
-
-type LostRobotCoordinate = Record<number, Record<number, Orientation>>;
-
-const lostRobotCoordinates: LostRobotCoordinate = {
-  10: {
-    20: 'n',
-  },
-};
-
-export interface RobotParams {
-  worldDimensions: Coordinate;
-  instructions: Instruction[];
-  initialPosition: Position;
-  lostRobotCoordinates?: LostRobotCoordinate;
-}
-
-interface IsInOnALostCoordinate {
-  previousPosition: Position;
-  instruction: Instruction;
-}
+import type {
+  Position,
+  Instruction,
+  Coordinate,
+  LostRobotCoordinate,
+  RobotParams,
+  Orientation,
+  IsInOnALostCoordinate,
+} from '../@types';
 
 export default class Robot {
   lostCoordinate?: Position;

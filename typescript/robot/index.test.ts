@@ -1,5 +1,5 @@
 import Robot from '.';
-import type { RobotParams } from '.';
+import type { RobotParams } from '../@types';
 
 const worldDimensions = {
   x: 5,

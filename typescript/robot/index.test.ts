@@ -1,7 +1,7 @@
 import Robot from '.';
 import type { RobotParams } from '../@types';
 
-const worldDimensions = {
+export const worldDimensions = {
   x: 5,
   y: 3,
 };
@@ -62,7 +62,6 @@ describe('Robot', () => {
       instructions,
       position: initialPosition,
       isLost: false,
-      isStopped: false,
     });
   });
 
@@ -122,8 +121,8 @@ describe('Robot', () => {
     const params: RobotParams = {
       ...robotThreeParams,
       lostRobotCoordinates: {
-        3: {
-          3: 'n',
+        '3': {
+          '3': 'n',
         },
       },
     };
@@ -147,8 +146,8 @@ describe('Robot', () => {
     const robotThree = new Robot(robotThreeParams);
 
     robotThree.setLostRobotCoordinates({
-      3: {
-        3: 'n',
+      '3': {
+        '3': 'n',
       },
     });
 

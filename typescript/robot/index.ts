@@ -15,7 +15,6 @@ export default class Robot {
     instructions: Instruction[];
     dimensions?: Coordinate;
     isLost: boolean;
-    isStopped: boolean;
     lostRobotCoordinates?: LostRobotCoordinate;
   };
 
@@ -34,7 +33,6 @@ export default class Robot {
       instructions,
       dimensions: worldDimensions,
       isLost: false,
-      isStopped: false,
       lostRobotCoordinates,
     };
   }

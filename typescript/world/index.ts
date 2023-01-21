@@ -17,8 +17,12 @@ export default class World {
   }
 
   moveRobots() {
-    this.robots.map((robot) => {
+    return this.robots.map((robot) => {
       robot.setworldDimensions(this.dimensions);
+
+      if (this.lostRobotCoordinates) {
+        robot.setLostRobotCoordinates(this.lostRobotCoordinates);
+      }
 
       robot.move();
 
@@ -28,15 +32,13 @@ export default class World {
           this.lostRobotCoordinates = {
             ...this.lostRobotCoordinates,
             [lostCoordinate['x']]: {
-              [lostCoordinate['y']]: lostCoordinate['orientation'],
+              [Number(lostCoordinate['y'])]: lostCoordinate['orientation'],
             },
           };
         }
       }
 
-      if (this.lostRobotCoordinates) {
-        robot.setLostRobotCoordinates(this.lostRobotCoordinates);
-      }
+      return robot;
     });
   }
 }

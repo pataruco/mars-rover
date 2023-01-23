@@ -1,5 +1,10 @@
 import { argv } from 'node:process';
 import { readFile } from 'node:fs/promises';
+import { inspect } from 'util';
+
+import World from './world';
+import Robot from './robot';
+import { Instruction, Orientation, Position, RobotParams } from './@types';
 
 const [flag, path] = argv.slice(2);
 
@@ -30,14 +35,15 @@ const readFileContents = async (path: string) => {
 const removeEmptySpace = (string: string) =>
   string.replaceAll(' ', '').trim().toLocaleLowerCase();
 
-const twoDigits = new RegExp(/\d{2}/g);
-const position = new RegExp(/((\d{2})(n|w|s|e){1})/g);
+const twoDigitsPattern = new RegExp(/\d{2}/g);
+const positionPattern = new RegExp(/((\d{2})(n|w|s|e){1})/g);
+const instructionsPattern = new RegExp(/((r|l|f)+)/g);
 
 const getDimensions = (string: string | undefined) => {
   const error = Error('Grid dimensions should be two digits, e.g. 53.');
   if (string) {
     const cleanDimensionsData = removeEmptySpace(string);
-    if (cleanDimensionsData.match(twoDigits)) {
+    if (cleanDimensionsData.match(twoDigitsPattern)) {
       const [x, y] = cleanDimensionsData.split('');
       return {
         x: Number(x),
@@ -71,11 +77,27 @@ const getRobotsData = (comands: string[]) =>
 
 const getRobots = (comands: string[]) => {
   const robotsData = getRobotsData(comands);
-
-  console.log({ robotsData });
-
+  const robotParams: RobotParams[] = [];
   for (const { initialPosition, instructions } of robotsData) {
+    if (
+      !initialPosition.match(positionPattern) &&
+      !instructions.match(instructionsPattern)
+    ) {
+      throw Error(
+        `A position consists of two integers specifying the initial coordinates of the robot and an orientation (N, S, E, W), all separated by whitespace on one line. 
+        A robot instruction is a string of the letters 'L', 'R', and 'F' on one line.`,
+      );
+    }
+
+    const [x, y, orientation] = initialPosition.split('');
+
+    robotParams.push({
+      initialPosition: { x: Number(x), y: Number(y), orientation } as Position,
+      instructions: instructions.split('') as unknown as Instruction[],
+    });
   }
+
+  return robotParams.map((robotParams) => new Robot(robotParams));
 };
 
 const main = async () => {
@@ -86,12 +108,31 @@ const main = async () => {
 
   const dimensionsData = commands?.shift();
 
-  // TODO: handle errors
-  const dimensions = getDimensions(dimensionsData);
+  try {
+    if (dimensionsData && commands) {
+      const dimensions = getDimensions(dimensionsData);
+      const robots = getRobots(commands);
 
-  if (commands) {
-    const robots = getRobots(commands);
-  }
+      console.log(inspect({ dimensions, robots }, true, Infinity, true));
+
+      const world = new World({
+        dimensions,
+        robots,
+      });
+
+      world.moveRobots().forEach((robot) => {
+        if (robot.data.isLost) {
+          console.log(
+            `${robot.lostCoordinate?.x} ${robot.lostCoordinate?.y} ${robot.lostCoordinate?.orientation} LOST`.toUpperCase(),
+          );
+        } else {
+          console.log(
+            `${robot.data.position.x} ${robot.data.position.y} ${robot.data.position.orientation}`.toUpperCase(),
+          );
+        }
+      });
+    }
+  } catch (error) {}
 };
 
 main();

@@ -1,3 +1,5 @@
+#!/usr/bin/env -S ts-node
+
 import { argv } from 'node:process';
 
 import { readFileContents, getDimensions, getRobots } from './input-handler';
@@ -50,6 +52,7 @@ const main = async () => {
         });
       }
     }
+    throw Error('File is empty');
   } catch (error) {
     console.error(error);
   }

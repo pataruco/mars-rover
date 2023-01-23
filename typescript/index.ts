@@ -1,4 +1,4 @@
-#!/usr/bin/env -S ts-node
+#!/usr/bin/env -S ts-node --files
 
 import { argv } from 'node:process';
 

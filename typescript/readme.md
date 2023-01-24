@@ -4,6 +4,10 @@
 
 It is code challenge built on TypeScript
 
+## Problem description
+
+You can found it [here](../docs/the-problem.md)
+
 ## Requirements
 
 - Node >= v19.4.0
@@ -53,6 +57,16 @@ It is code challenge built on TypeScript
   pnpm test
   ```
 
-## Problem description
+## How to run it with Docker
 
-You can found it [here](../docs/the-problem.md)
+- Inside `typescript` folder build image
+
+  ```sh
+  docker build -t mars-rover-ts .
+  ```
+
+- Then run the image
+
+  ```sh
+  docker run -t mars-rover-ts
+  ```

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -7,9 +7,9 @@ class Robot:
     position: Dict[str, str | int]
     instructions: List[str]
     dimensions: Dict[str, int]
+    lost_robot_coordinates: Optional[Dict[int, Dict[int, str]]] = None
     is_lost = False
     lost_coordinate = None
-
 
     def move(self):
         for instruction in self.instructions:
@@ -21,13 +21,27 @@ class Robot:
                     self.position["orientation"] = self.check_rudder("l", self.position["orientation"])
                 case "f":
                     if self.is_in_boundaries() and not self.is_lost:
-                      self.move_forward(self.position["orientation"])
-            
-            if not self.is_in_boundaries() and not self.is_lost:
-              self.is_lost = True
-              self.lost_coordinate = previous_position
+                        self.move_forward(self.position["orientation"])
 
-            print({"instruction": instruction, "position": self.position, "previous_position": previous_position,  "is_in_boundaries": self.is_in_boundaries(), "is_lost": self.is_lost, "lost_coordinate": self.lost_coordinate })
+            if (
+                not self.is_in_boundaries()
+                and not self.is_lost
+                # and not self.is_in_a_lost_coordinate(previous_position, instruction)
+            ):
+                self.is_lost = True
+                self.lost_coordinate = previous_position
+
+            print(
+                {
+                    "instruction": instruction,
+                    "position": self.position,
+                    "previous_position": previous_position,
+                    "is_in_boundaries": self.is_in_boundaries(),
+                    "is_lost": self.is_lost,
+                    "lost_coordinate": self.lost_coordinate,
+                    "lost_robot_coordinates": self.lost_robot_coordinates,
+                }
+            )
 
     def check_rudder(self, instruction, orientation):
         rudder = ["n", "e", "s", "w"]
@@ -63,6 +77,21 @@ class Robot:
         return is_within_horizontal_boundaries and is_within_vertical_boundaries
 
 
+# TODO:
+# def is_in_a_lost_coordinate(self, previous_position, instruction):
+#     if (
+#         self.lost_robot_coordinates
+#         and self.lost_robot_coordinates[int(previous_position["x"])]
+#         and self.lost_robot_coordinates[previous_position["x"]][previous_position["y"]]
+#         and self.lost_robot_coordinates[previous_position["x"]][previous_position["y"]]
+#         == previous_position["orientation"]
+#         and instruction == "f"
+#     ):
+#         return True
+#     else:
+#         return False
+
+
 robotOne = Robot(
     instructions=["r", "f", "r", "f", "r", "f", "r", "f"],
     dimensions={
@@ -77,19 +106,33 @@ robotOne = Robot(
 )
 
 
-
 robotTwo = Robot(
-  instructions=['f','r','r','f','l','l','f','f','r','r','f','l','l'],
-  dimensions={
-      "x": 5,
-      "y": 3,
-  },
-  position={
-      "x": 3,
-      "y": 2,
-      "orientation": "n",
-  },
+    instructions=["f", "r", "r", "f", "l", "l", "f", "f", "r", "r", "f", "l", "l"],
+    dimensions={
+        "x": 5,
+        "y": 3,
+    },
+    position={
+        "x": 3,
+        "y": 2,
+        "orientation": "n",
+    },
+)
+
+robot_three = Robot(
+    instructions=["l", "l", "f", "f", "f", "l", "f", "l", "f", "l"],
+    dimensions={
+        "x": 5,
+        "y": 3,
+    },
+    position={
+        "x": 0,
+        "y": 3,
+        "orientation": "w",
+    },
+    lost_robot_coordinates={3: {3: "n"}},
 )
 
 # robotOne.move()
-robotTwo.move()
+# robotTwo.move()
+robot_three.move()

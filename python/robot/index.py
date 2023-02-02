@@ -1,13 +1,19 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
+Coordinate = Dict[str, int]
+Orientation = str
+Position = Dict[str, int | str]
+Instruction = str
+Lost_robot_coordinates = Dict[int, Dict[int, str]]
+
 
 @dataclass
 class Robot:
-    position: Dict[str, str | int]
-    instructions: List[str]
-    dimensions: Dict[str, int]
-    lost_robot_coordinates: Optional[Dict[int, Dict[int, str]]] = None
+    position: Position
+    instructions: List[Instruction]
+    dimensions: Optional[Coordinate] = None
+    lost_robot_coordinates: Optional[Lost_robot_coordinates] = None
     is_lost = False
     lost_coordinate = None
 
@@ -31,9 +37,7 @@ class Robot:
                 self.is_lost = True
                 self.lost_coordinate = previous_position
 
-            print(self.lost_coordinate)
-
-    def check_rudder(self, instruction, orientation):
+    def check_rudder(self, instruction: Instruction, orientation: Orientation):
         rudder = ["n", "e", "s", "w"]
 
         index = rudder.index(orientation)
@@ -50,7 +54,7 @@ class Robot:
 
         return rudder[index]
 
-    def move_forward(self, orientation):
+    def move_forward(self, orientation: Orientation):
         match orientation:
             case "n":
                 self.position["y"] += 1
@@ -66,7 +70,7 @@ class Robot:
         is_within_vertical_boundaries = self.position["y"] >= 0 and self.position["y"] <= self.dimensions["y"]
         return is_within_horizontal_boundaries and is_within_vertical_boundaries
 
-    def is_in_a_lost_coordinate(self, previous_position, instruction):
+    def is_in_a_lost_coordinate(self, previous_position: Position, instruction: Instruction):
         return (
             # Are lost coordinates
             self.lost_robot_coordinates
@@ -80,3 +84,9 @@ class Robot:
             # Is instruction forward
             and instruction == "f"
         )
+
+    def set_lost_robot_coordinates(self, coordinates: Lost_robot_coordinates):
+        self.lost_robot_coordinates = coordinates
+
+    def set_world_dimmensions(self, world_dimensions: Coordinate):
+        self.dimensions = world_dimensions

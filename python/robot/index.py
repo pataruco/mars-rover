@@ -20,28 +20,18 @@ class Robot:
                 case "l":
                     self.position["orientation"] = self.check_rudder("l", self.position["orientation"])
                 case "f":
-                    if self.is_in_boundaries() and not self.is_lost:
+                    if (
+                        self.is_in_boundaries()
+                        and not self.is_lost
+                        and not self.is_in_a_lost_coordinate(previous_position, instruction)
+                    ):
                         self.move_forward(self.position["orientation"])
 
-            if (
-                not self.is_in_boundaries()
-                and not self.is_lost
-                # and not self.is_in_a_lost_coordinate(previous_position, instruction)
-            ):
+            if not self.is_in_boundaries() and not self.is_lost:
                 self.is_lost = True
                 self.lost_coordinate = previous_position
 
-            print(
-                {
-                    "instruction": instruction,
-                    "position": self.position,
-                    "previous_position": previous_position,
-                    "is_in_boundaries": self.is_in_boundaries(),
-                    "is_lost": self.is_lost,
-                    "lost_coordinate": self.lost_coordinate,
-                    "lost_robot_coordinates": self.lost_robot_coordinates,
-                }
-            )
+            print(self.lost_coordinate)
 
     def check_rudder(self, instruction, orientation):
         rudder = ["n", "e", "s", "w"]
@@ -76,20 +66,20 @@ class Robot:
         is_within_vertical_boundaries = self.position["y"] >= 0 and self.position["y"] <= self.dimensions["y"]
         return is_within_horizontal_boundaries and is_within_vertical_boundaries
 
-
-# TODO:
-# def is_in_a_lost_coordinate(self, previous_position, instruction):
-#     if (
-#         self.lost_robot_coordinates
-#         and self.lost_robot_coordinates[int(previous_position["x"])]
-#         and self.lost_robot_coordinates[previous_position["x"]][previous_position["y"]]
-#         and self.lost_robot_coordinates[previous_position["x"]][previous_position["y"]]
-#         == previous_position["orientation"]
-#         and instruction == "f"
-#     ):
-#         return True
-#     else:
-#         return False
+    def is_in_a_lost_coordinate(self, previous_position, instruction):
+        return (
+            # Are lost coordinates
+            self.lost_robot_coordinates
+            # Is in a lost X coordinate
+            and self.lost_robot_coordinates.get(previous_position["x"]) != None
+            # Is in a lost Y coordinate
+            and self.lost_robot_coordinates.get(previous_position["x"]).get(previous_position["y"]) != None
+            # Is in a lost coordinate
+            and self.lost_robot_coordinates.get(previous_position["x"]).get(previous_position["y"])
+            == previous_position["orientation"]
+            # Is instruction forward
+            and instruction == "f"
+        )
 
 
 robotOne = Robot(
@@ -135,4 +125,4 @@ robot_three = Robot(
 
 # robotOne.move()
 # robotTwo.move()
-robot_three.move()
+# robot_three.move()

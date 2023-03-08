@@ -77,9 +77,14 @@ def test_accept_world_params():
 def test_move_robots():
     world = World(dimensions=world_dimensions, robots=robots)
 
-    [one] = world.move_robots()
-
-    print("one", one)
-    # assert False
+    one, two, three = world.move_robots()
 
     assert one.position == {"x": 1, "y": 1, "orientation": "e"}
+    assert one.is_lost == False
+
+    assert two.position == {"x": 3, "y": 4, "orientation": "n"}
+    assert two.lost_coordinate == {"x": 3, "y": 3, "orientation": "n"}
+    assert two.is_lost == True
+
+    assert three.position == {"x": 2, "y": 3, "orientation": "s"}
+    assert three.is_lost == False

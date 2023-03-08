@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from robot.index import Coordinate, Lost_robot_coordinates, Robot
 from typing import List, Optional
 
@@ -7,10 +7,12 @@ from typing import List, Optional
 class World:
     dimensions: Coordinate
     robots: List[Robot]
-    lost_robot_coordinates: Optional[Lost_robot_coordinates] = {}
+    lost_robot_coordinates: Optional[Lost_robot_coordinates] = field(
+        default_factory=dict
+    )
 
     def move_robots(self):
-        robots = []
+        robots_moved = []
         for robot in self.robots:
             robot.set_world_dimmensions(self.dimensions)
 
@@ -30,5 +32,5 @@ class World:
                         },
                     }
 
-            robots.append(robots)
-        return robots
+            robots_moved.append(robot)
+        return robots_moved

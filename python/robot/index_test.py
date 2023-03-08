@@ -100,11 +100,14 @@ def test_reports_last_known_coordinates_when_is_lost():
 
 
 def test_prevent_get_lost_if_robot_is_in_a_lost_coordinate():
-    robot_three_params = {
-        "instructions": ["l", "l", "f", "f", "f", "l", "f", "l", "f", "l"],
-        "position": {
-            "x": 0,
-            "y": 3,
-            "orientation": "w",
-        },
-    }
+    robot = Robot(
+        instructions=robot_three_params["instructions"],
+        position=robot_three_params["position"],
+    )
+
+    robot.set_world_dimmensions(world_dimensions)
+    robot.set_lost_robot_coordinates({3: {3: "n"}})
+    robot.move()
+
+    assert robot.position == {"x": 2, "y": 3, "orientation": "s"}
+    assert robot.is_lost == False

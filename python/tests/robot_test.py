@@ -1,5 +1,4 @@
-# import pytest
-from index import Robot
+from robot.index import Robot
 
 world_dimensions = {
     "x": 5,

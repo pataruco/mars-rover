@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from python.robot.index import Coordinate, Lost_robot_coordinates, Robot
+from robot.index import Coordinate, Lost_robot_coordinates, Robot
 from typing import List, Optional
 
 

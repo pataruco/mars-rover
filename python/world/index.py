@@ -7,9 +7,10 @@ from typing import List, Optional
 class World:
     dimensions: Coordinate
     robots: List[Robot]
-    lost_robot_coordinates: Optional[Lost_robot_coordinates] = None
+    lost_robot_coordinates: Optional[Lost_robot_coordinates] = {}
 
     def move_robots(self):
+        robots = []
         for robot in self.robots:
             robot.set_world_dimmensions(self.dimensions)
 
@@ -22,11 +23,12 @@ class World:
                 if robot.lost_coordinate:
                     self.lost_robot_coordinates = {
                         **self.lost_robot_coordinates,
-                        (robot.lost_coordinate["x"]): {
-                            (robot.lost_coordinate["y"]): robot.lost_coordinate[
+                        robot.lost_coordinate["x"]: {
+                            robot.lost_coordinate["y"]: robot.lost_coordinate[
                                 "orientation"
                             ]
                         },
                     }
 
-            return robot
+            robots.append(robots)
+        return robots

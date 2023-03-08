@@ -72,3 +72,14 @@ def test_accept_world_params():
 
     assert world.dimensions == world_dimensions
     assert world.robots == robots
+
+
+def test_move_robots():
+    world = World(dimensions=world_dimensions, robots=robots)
+
+    [one] = world.move_robots()
+
+    print("one", one)
+    # assert False
+
+    assert one.position == {"x": 1, "y": 1, "orientation": "e"}
